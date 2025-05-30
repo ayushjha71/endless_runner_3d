@@ -272,113 +272,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6317157860369911955, guid: 57411395229d5d44ba36cf6e16bb7a97, type: 3}
   m_PrefabInstance: {fileID: 893681399081926684}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &175309693
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 175309699}
-  - component: {fileID: 175309698}
-  - component: {fileID: 175309697}
-  - component: {fileID: 175309696}
-  - component: {fileID: 175309695}
-  - component: {fileID: 175309694}
-  m_Layer: 0
-  m_Name: AdsManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &175309694
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 175309693}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f72e62dfe5e3d44488646668066a613f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  androidAdUnitId: Rewarded_Android
-  iosAdUnitId: Rewarded_iOS
-  rewardHandler: {fileID: 1807394089}
---- !u!114 &175309695
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 175309693}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffd459eff077944489ce1feab0d6748c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  androidAdUnitId: Interstitial_Android
-  iosAdUnitId: Interstitial_iOS
---- !u!114 &175309696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 175309693}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74ff86b590830144f9a34d642f5739d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  androidAdUnitId: Banner_Android
-  iosAdUnitId: Banner_iOS
---- !u!114 &175309697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 175309693}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc648aa48ac9bf34ba5334d07a869771, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &175309698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 175309693}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae11ef00be3ac8f4e9aba6b6c8fac4e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initializeAdsHandler: {fileID: 175309697}
-  bannerAdsHandler: {fileID: 175309696}
-  interstitialAdsHandler: {fileID: 175309695}
-  rewardedAdsHandler: {fileID: 175309694}
---- !u!4 &175309699
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 175309693}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &176134584 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3197802320708611086, guid: 57411395229d5d44ba36cf6e16bb7a97, type: 3}
@@ -4922,13 +4815,74 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e73c495a23ff714ab8d4f58fc5cf3b8, type: 3}
+--- !u!1001 &5443252132843667758
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2081124650283736899, guid: c1809374779e685458842b25a2a140f3, type: 3}
+      propertyPath: rewardHandler
+      value: 
+      objectReference: {fileID: 1807394089}
+    - target: {fileID: 5618486278712878752, guid: c1809374779e685458842b25a2a140f3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618486278712878752, guid: c1809374779e685458842b25a2a140f3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618486278712878752, guid: c1809374779e685458842b25a2a140f3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618486278712878752, guid: c1809374779e685458842b25a2a140f3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618486278712878752, guid: c1809374779e685458842b25a2a140f3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618486278712878752, guid: c1809374779e685458842b25a2a140f3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618486278712878752, guid: c1809374779e685458842b25a2a140f3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618486278712878752, guid: c1809374779e685458842b25a2a140f3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618486278712878752, guid: c1809374779e685458842b25a2a140f3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618486278712878752, guid: c1809374779e685458842b25a2a140f3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7146407915718201452, guid: c1809374779e685458842b25a2a140f3, type: 3}
+      propertyPath: m_Name
+      value: AdsManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c1809374779e685458842b25a2a140f3, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1418913506}
   - {fileID: 5272088943449709513}
-  - {fileID: 175309699}
+  - {fileID: 5443252132843667758}
   - {fileID: 893681399081926684}
   - {fileID: 457904701}
   - {fileID: 1807394088}

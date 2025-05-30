@@ -1,5 +1,7 @@
+using gameAds.Manager;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -25,11 +27,8 @@ public class PlayerMovement : MonoBehaviour
     private int currentLives;
     public Image[] lifeImages;
 
-    // Score tracking for speed milestones
-    [SerializeField]
-    private ScoreManager scoreManager;
-    private float nextSpeedIncreaseScore = 100f; // First speed increase at 50 points
-    public float scoreIntervalForSpeedIncrease = 100f; // Increase speed every 50 points
+    private float nextSpeedIncreaseScore = 100f; // First speed increase at 100m points
+    public float scoreIntervalForSpeedIncrease = 100f; // Increase speed every 100mpoints
 
     float horizontalInput;
     public float horizontalMultiplier = 1.5f;
@@ -40,11 +39,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
+        CustomEvents.OnGetPlayerMovementHandler?.Invoke(this);
         currentLives = maxLives;
         currentSpeed = baseSpeed;
         UpdateLifeImages();
     }
-
+    
     private void FixedUpdate()
     {
         // Progressive speed increase over time
@@ -64,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
 
         // Score-based speed increase (alternative or additional to time-based)
-        if (scoreManager != null && scoreManager.totalDistance >= nextSpeedIncreaseScore)
+        if (GameManager.Instance.TotalDistance >= nextSpeedIncreaseScore)
         {
             IncreaseSpeed();
             nextSpeedIncreaseScore += scoreIntervalForSpeedIncrease;
@@ -128,7 +128,8 @@ public class PlayerMovement : MonoBehaviour
         else if (collision.gameObject.tag == "coins")
         {
             Destroy(collision.gameObject);
-            scoreManager.AddCoin(1);
+            CustomEvents.OnCoinCOllected?.Invoke(1);
+            //scoreManager.AddCoin(1);
         }
     }
 
@@ -139,7 +140,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (currentLives <= 0)
         {
-            GameOver();
+            CustomEvents.OnGameOver?.Invoke();
         }
     }
 
@@ -185,18 +186,5 @@ public class PlayerMovement : MonoBehaviour
         currentSpeed = originalSpeed;
         isShielded = false;
         // Remove speed boost visual effect
-    }
-
-    void GameOver()
-    {
-        Time.timeScale = 0f;
-        GameOverPanel.SetActive(true);
-        Debug.Log("GameOver");
-    }
-
-    public void RestartButtonClick()
-    {
-        Time.timeScale = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

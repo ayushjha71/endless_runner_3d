@@ -1,16 +1,29 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace gameAds.Manager
 {
+    public static class CustomEvents
+    {
+        public static Action<PlayerMovement> OnGetPlayerMovementHandler;
+        public static Action<int> OnCoinCOllected;
+
+        public static Action OnLeaderBoard;
+
+        public static Action OnGameOver;
+    }
     public class GameManager : MonoBehaviour
     {
         [SerializeField]
         private float waitTime = 5;
 
         public bool CanGetReward = false;
+        public bool UserFirstVisit = true;
+
         public static GameManager Instance;
 
         public int TotalCoin
@@ -19,7 +32,7 @@ namespace gameAds.Manager
             set;
         }
 
-        public int TotalCashBalance
+        public float TotalDistance
         {
             get;
             set;

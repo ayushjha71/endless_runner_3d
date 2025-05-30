@@ -1,6 +1,7 @@
 using UnityEngine;
 using gameAds.Manager;
 using UnityEngine.Advertisements;
+using UnityEngine.SceneManagement;
 
 namespace gameAds.Handler.Ads
 {
@@ -63,13 +64,9 @@ namespace gameAds.Handler.Ads
 
         public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
         {
-            Debug.LogError("[RewardedAdsHandler]" + "PlaceMent ID : : " + placementId + " : : showCompletionState" + showCompletionState);
-          //  if(placementId == mAdUnitID && showCompletionState.Equals(UnityAdsCompletionState.COMPLETED))
-            {
-                Debug.LogError("Give User a reward he has finished ads watching");
-                GameManager.Instance.CanGetReward = true;
-                rewardHandler.RewardPopUp.SetActive(true);
-            }
+            Debug.LogError("Give User a reward he has finished ads watching");
+            GameManager.Instance.CanGetReward = true;
+            Time.timeScale = 1;
         }
     }
 }

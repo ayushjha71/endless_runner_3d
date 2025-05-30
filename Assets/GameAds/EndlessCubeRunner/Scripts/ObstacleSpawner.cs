@@ -51,6 +51,7 @@ public class ObstacleSpawner : MonoBehaviour
 
         // Then spawn collectibles in remaining spaces
         SpawnCollectibles();
+        SpawnPowerUps();
     }
 
     void SpawnObstacles()
@@ -87,7 +88,10 @@ public class ObstacleSpawner : MonoBehaviour
         {
             SpawnCoins();
         }
+    }
 
+    private void SpawnPowerUps()
+    {
         // Spawn power-ups - slightly increase chance based on tile index
         float currentPowerUpChance = Mathf.Min(powerUpSpawnChance + (groundTileIndex * 0.02f), 0.5f);
         if (powerUpPrefabs != null && powerUpPrefabs.Length > 0 && Random.value < currentPowerUpChance)
@@ -134,11 +138,7 @@ public class ObstacleSpawner : MonoBehaviour
         for (int attempt = 0; attempt < maxAttempts; attempt++)
         {
             // Generate random position within road boundaries
-            Vector3 randomPos = new Vector3(
-                Random.Range(leftBoundary, rightBoundary),
-                0f,
-                Random.Range(startZ, endZ)
-            );
+            Vector3 randomPos = new Vector3(Random.Range(leftBoundary, rightBoundary), 0.3f, Random.Range(startZ, endZ));
 
             // Convert to world position
             Vector3 worldPos = transform.TransformPoint(randomPos);

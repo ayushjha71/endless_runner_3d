@@ -62,8 +62,8 @@ namespace gameAds.Handler.Ads
         public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
         {
             Debug.Log("Give User a reward he has finished ads watching");
-            GameManager.Instance.CanGetReward = true;
-            SceneManager.LoadScene("MenuScene");
+            Time.timeScale = 1f;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }
