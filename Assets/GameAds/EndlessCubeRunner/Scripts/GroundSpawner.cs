@@ -4,21 +4,38 @@ using UnityEngine;
 
 public class GroundSpawner : MonoBehaviour
 {
+    [SerializeField]
+    private MeshRenderer meshRenderer;
     public GameObject groundTile;
-    Vector3 nextSpawnPoint;
+    public int initialTileCount = 15;
+    private Vector3 nextSpawnPoint;
+    private float tileLength;
+    private int currentTileIndex = 0; // Track which tile we're spawning
 
-    // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i <= 15; i++)
+        // Get the length of the ground tile from its bounds
+        tileLength = meshRenderer.bounds.size.z;
+        // Spawn initial tiles
+        for (int i = 0; i < initialTileCount; i++)
         {
             SpawnTile();
         }
     }
+
     public void SpawnTile()
     {
-        GameObject temp = Instantiate(groundTile, nextSpawnPoint, Quaternion.identity);
-        nextSpawnPoint = temp.transform.GetChild(2).transform.position;
+        Quaternion groundRotation = Quaternion.Euler(0, 0, 0);
+        GameObject newTile = Instantiate(groundTile, nextSpawnPoint, groundRotation);
+
+        // Get the ObstacleSpawner component and set its index
+        ObstacleSpawner obstacleSpawner = newTile.GetComponentInChildren<ObstacleSpawner>();
+        if (obstacleSpawner != null)
+        {
+            obstacleSpawner.SetGroundTileIndex(currentTileIndex);
+        }
+
+        nextSpawnPoint.z += tileLength; // Move forward by tile length
+        currentTileIndex++; // Increment for next tile
     }
 }
-
