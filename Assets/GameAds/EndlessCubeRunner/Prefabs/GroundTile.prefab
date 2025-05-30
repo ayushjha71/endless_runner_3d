@@ -681,6 +681,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   obstaclesPrefab: {fileID: 6344170157542764358, guid: 3bbb10b20bac8704da220bfabb7e438c, type: 3}
   coinPrefab: {fileID: 457996937247450598, guid: 2fa527c46aee8844f833c35aac29eaf6, type: 3}
+  shieldPrefab: {fileID: 428846550625880724, guid: 90f3f1ac21d1a3c47a105e6eea1007e5, type: 3}
+  speedBoostPrefab: {fileID: 8689526749586062098, guid: c10478b2334a68b4a926be58b784e89c, type: 3}
+  extraCoinsPrefab: {fileID: 0}
+  coinSpawnChance: 0.7
+  shieldSpawnChance: 0.1
+  speedBoostSpawnChance: 0.1
+  extraCoinsSpawnChance: 0.15
 --- !u!65 &3605474764584867412
 BoxCollider:
   m_ObjectHideFlags: 0
