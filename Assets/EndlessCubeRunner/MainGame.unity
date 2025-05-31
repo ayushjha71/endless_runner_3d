@@ -1411,6 +1411,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d4073655037f0a46836fb37a1d3c176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  KeyBoardInput: 0
   isTouchingLeft: 0
   isTouchingRight: 0
   jumpZoneWidth: 0.3
