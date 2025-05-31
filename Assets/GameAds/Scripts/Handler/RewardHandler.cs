@@ -1,10 +1,10 @@
-using gameAds.Constant;
+using EndlessCubeRunner.Constant;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace gameAds.Handler
+namespace EndlessCubeRunner.Handler
 {
     public class RewardHandler : MonoBehaviour
     {

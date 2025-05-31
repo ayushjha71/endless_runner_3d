@@ -1,17 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
+using EndlessCubeRunner.Handler;
 using UnityEngine;
 
-public class ShieldPowerUp : MonoBehaviour
+namespace EndlessCubeRunner.PowerUp
 {
-    public float duration = 5f;
-
-    private void OnTriggerEnter(Collider other)
+    public class ShieldPowerUp : MonoBehaviour
     {
-        if (other.CompareTag("Player"))
+        public float duration = 5f;
+
+        private void OnTriggerEnter(Collider other)
         {
-            other.GetComponent<PlayerMovement>().ActivateShield(duration);
-            Destroy(gameObject);
+            if (other.CompareTag("Player"))
+            {
+                other.GetComponent<PlayerMovement>().ActivateShield(duration);
+                Destroy(gameObject);
+            }
         }
     }
 }

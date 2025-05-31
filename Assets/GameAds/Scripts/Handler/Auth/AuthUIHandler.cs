@@ -5,7 +5,7 @@ using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine.SceneManagement;
 
-namespace gameAds.Handler.Auth
+namespace EndlessCubeRunner.Handler.Auth
 {
     public class AuthUIHandler : MonoBehaviour
     {

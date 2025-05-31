@@ -1,13 +1,13 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using gameAds.Handler;
-using gameAds.Handler.Auth;
+using EndlessCubeRunner.Handler;
+using EndlessCubeRunner.Handler.Auth;
 using UnityEngine.Advertisements;
 using UnityEngine.SceneManagement;
 
 
-namespace gameAds.Manager
+namespace EndlessCubeRunner.Manager
 {
     public class UIManager : MonoBehaviour
     {

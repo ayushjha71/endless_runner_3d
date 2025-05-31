@@ -1,5 +1,5 @@
-using gameAds.Constant;
-using gameAds.Manager;
+using EndlessCubeRunner.Constant;
+using EndlessCubeRunner.Manager;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;

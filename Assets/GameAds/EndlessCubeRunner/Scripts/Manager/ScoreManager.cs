@@ -1,88 +1,87 @@
-using UnityEngine;
 using TMPro;
-using gameAds.Manager;
+using UnityEngine;
+using EndlessCubeRunner.Handler;
 
-public class ScoreManager : MonoBehaviour
+namespace EndlessCubeRunner.Manager
 {
-    [SerializeField]
-    private TMP_Text distanceText;
-    [SerializeField]
-    private TMP_Text coinText;
-
-    private float totalDistance = 0f;
-    private int collectedCoins = 0;
-    private Vector3 lastPosition;
-    private PlayerMovement playerMovement;
-
-    private void OnEnable()
+    public class ScoreManager : MonoBehaviour
     {
-        CustomEvents.OnGetPlayerMovementHandler += GetPlayerMovement;
-        CustomEvents.OnCoinCOllected += AddCoin;
-    }
+        [SerializeField]
+        private TMP_Text distanceText;
+        [SerializeField]
+        private TMP_Text coinText;
 
-    private void OnDisable()
-    {
-        CustomEvents.OnGetPlayerMovementHandler -= GetPlayerMovement;
-        CustomEvents.OnCoinCOllected -= AddCoin;
-    }
+        private float totalDistance = 0f;
+        private int collectedCoins = 0;
+        private Vector3 lastPosition;
+        private PlayerMovement playerMovement;
 
-    private void GetPlayerMovement(PlayerMovement player)
-    {
-        playerMovement = player;
-        lastPosition = playerMovement.transform.position;
-    }
-
-    private void AddCoin(int coinAmount)
-    {
-        collectedCoins += coinAmount;
-        UpdateUI();
-    }
-
-    void Update()
-    {
-        // Calculate distance traveled since last frame
-        if(playerMovement != null)
+        private void OnEnable()
         {
-            float distanceThisFrame = Vector3.Distance(playerMovement.transform.position, lastPosition);
-            totalDistance += distanceThisFrame;
+            CustomEvents.OnGetPlayerMovementHandler += GetPlayerMovement;
+            CustomEvents.OnCoinCOllected += AddCoin;
+        }
+
+        private void OnDisable()
+        {
+            CustomEvents.OnGetPlayerMovementHandler -= GetPlayerMovement;
+            CustomEvents.OnCoinCOllected -= AddCoin;
+        }
+
+        private void GetPlayerMovement(PlayerMovement player)
+        {
+            playerMovement = player;
             lastPosition = playerMovement.transform.position;
         }
-        UpdateUI();
-    }
 
-    private void UpdateUI()
-    {
-        // Display distance in meters with 1 decimal place
-        distanceText.text = totalDistance.ToString("F1") + "m";
-        coinText.text = collectedCoins.ToString();
-
-        // Update GameManager with current values
-        GameManager.Instance.TotalDistance = totalDistance;
-        GameManager.Instance.TotalCoin = collectedCoins;
-
-        // Check for high score before saving
-        CheckAndSaveHighScore();
-    }
-
-    private void CheckAndSaveHighScore()
-    {
-        // Get the current high score from PlayerPrefs (default to 0 if not found)
-        float lastHighScore = PlayerPrefs.GetFloat("HighScore", 0f);
-        int lastHighCoins = PlayerPrefs.GetInt("HighScoreCoins", 0);
-
-        // Check if current distance is a new high score
-        if (totalDistance > lastHighScore)
+        private void AddCoin(int coinAmount)
         {
-            // New high score achieved! Save both distance and coins
-            PlayerPrefs.SetFloat("HighScore", totalDistance);
-            PlayerPrefs.SetInt("HighScoreCoins", collectedCoins);
-            PlayerPrefs.Save();
+            collectedCoins += coinAmount;
+            UpdateUI();
+        }
 
-            // Optional: You can add some visual feedback here
-            Debug.Log($"New High Score! Distance: {totalDistance:F1}m, Coins: {collectedCoins}");
+        void Update()
+        {
+            // Calculate distance traveled since last frame
+            if (playerMovement != null)
+            {
+                float distanceThisFrame = Vector3.Distance(playerMovement.transform.position, lastPosition);
+                totalDistance += distanceThisFrame;
+                lastPosition = playerMovement.transform.position;
+            }
+            UpdateUI();
+        }
 
-            // If you want to show a "New High Score!" message to the player
-            // ShowNewHighScoreMessage();
+        private void UpdateUI()
+        {
+            // Display distance in meters with 1 decimal place
+            distanceText.text = totalDistance.ToString("F1") + "m";
+            coinText.text = collectedCoins.ToString();
+
+            // Update GameManager with current values
+            GameManager.Instance.TotalDistance = totalDistance;
+            GameManager.Instance.TotalCoin = collectedCoins;
+
+            // Check for high score before saving
+            CheckAndSaveHighScore();
+        }
+
+        private void CheckAndSaveHighScore()
+        {
+            // Get the current high score from PlayerPrefs (default to 0 if not found)
+            float lastHighScore = PlayerPrefs.GetFloat("HighScore", 0f);
+            int lastHighCoins = PlayerPrefs.GetInt("HighScoreCoins", 0);
+
+            // Check if current distance is a new high score
+            if (totalDistance > lastHighScore)
+            {
+                // New high score achieved! Save both distance and coins
+                PlayerPrefs.SetFloat("HighScore", totalDistance);
+                PlayerPrefs.SetInt("HighScoreCoins", collectedCoins);
+                PlayerPrefs.Save();
+
+                // If you want to show a "New High Score!" message to the player TODO
+            }
         }
     }
 }

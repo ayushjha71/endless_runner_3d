@@ -1,8 +1,8 @@
 using UnityEngine;
 using PlayFab.ClientModels;
-using gameAds.Constant;
+using EndlessCubeRunner.Constant;
 
-namespace gameAds.Handler.Auth
+namespace EndlessCubeRunner.Handler.Auth
 {
     public class LoginHandler : MonoBehaviour
     {

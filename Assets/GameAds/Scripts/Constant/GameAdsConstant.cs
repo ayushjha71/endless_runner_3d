@@ -1,5 +1,5 @@
 
-namespace gameAds.Constant
+namespace EndlessCubeRunner.Constant
 {
     public static class GameAdsConstant
     {

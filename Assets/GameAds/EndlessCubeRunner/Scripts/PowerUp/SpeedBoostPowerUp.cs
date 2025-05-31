@@ -1,18 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
+using EndlessCubeRunner.Handler;
 using UnityEngine;
 
-public class SpeedBoostPowerUp : MonoBehaviour
+namespace EndlessCubeRunner.PowerUp
 {
-    public float boostAmount = 2f;
-    public float duration = 3f;
-
-    private void OnTriggerEnter(Collider other)
+    public class SpeedBoostPowerUp : MonoBehaviour
     {
-        if (other.CompareTag("Player"))
+        [SerializeField]
+        private float boostAmount = 1f;
+        [SerializeField]
+        private float duration = 3f;
+
+        private void OnTriggerEnter(Collider other)
         {
-            other.GetComponent<PlayerMovement>().ActivateSpeedBoost(boostAmount, duration);
-            Destroy(gameObject);
+            if (other.CompareTag("Player"))
+            {
+                other.GetComponent<PlayerMovement>().ActivateSpeedBoost(boostAmount, duration);
+                Destroy(gameObject);
+            }
         }
     }
 }
