@@ -37,6 +37,26 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isShielded = false;
 
+    // Mobile touch controls
+    [Header("Mobile Touch Controls")]
+    public float touchSensitivity = 1f;
+    private bool isTouchingLeft = false;
+    private bool isTouchingRight = false;
+
+    // Jump control settings
+    [Header("Jump Controls")]
+    public float jumpZoneWidth = 0.3f; // Center zone width for jump (0.3 = 30% of screen width)
+    private bool jumpTouchDetected = false;
+
+    // Position clamping
+    [Header("Position Clamping")]
+    public float leftBoundary = -2.5f;  // Adjust based on your road width
+    public float rightBoundary = 2.5f;  // Adjust based on your road width
+
+    // Smooth movement
+    private float targetHorizontalInput = 0f;
+    public float inputSmoothSpeed = 8f;
+
     private void Start()
     {
         CustomEvents.OnGetPlayerMovementHandler?.Invoke(this);
@@ -44,7 +64,8 @@ public class PlayerMovement : MonoBehaviour
         currentSpeed = baseSpeed;
         UpdateLifeImages();
     }
-    
+
+
     private void FixedUpdate()
     {
         // Progressive speed increase over time
@@ -56,23 +77,112 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 forwardMove = transform.forward * currentSpeed * Time.deltaTime;
         Vector3 horizontalMove = transform.right * horizontalInput * currentSpeed * Time.deltaTime * horizontalMultiplier;
-        rb.MovePosition(rb.position + forwardMove + horizontalMove);
+
+        // Calculate new position
+        Vector3 newPosition = rb.position + forwardMove + horizontalMove;
+
+        // Clamp horizontal position to keep player within boundaries
+        newPosition.x = Mathf.Clamp(newPosition.x, leftBoundary, rightBoundary);
+
+        rb.MovePosition(newPosition);
     }
 
     private void Update()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
+        // Handle mobile touch input for left/right movement
+        HandleTouchInput();
 
-        // Score-based speed increase (alternative or additional to time-based)
+        // Get keyboard input (for testing in editor)
+        float keyboardInput = Input.GetAxis("Horizontal");
+
+        // Combine touch and keyboard input
+        if (isTouchingLeft)
+        {
+            targetHorizontalInput = -1f * touchSensitivity;
+        }
+        else if (isTouchingRight)
+        {
+            targetHorizontalInput = 1f * touchSensitivity;
+        }
+        else if (Mathf.Abs(keyboardInput) > 0.1f)
+        {
+            targetHorizontalInput = keyboardInput;
+        }
+        else
+        {
+            targetHorizontalInput = 0f;
+        }
+
+        // Smooth the horizontal input for better feel
+        horizontalInput = Mathf.Lerp(horizontalInput, targetHorizontalInput, inputSmoothSpeed * Time.deltaTime);
+
+        // Score-based speed increase
         if (GameManager.Instance.TotalDistance >= nextSpeedIncreaseScore)
         {
             IncreaseSpeed();
             nextSpeedIncreaseScore += scoreIntervalForSpeedIncrease;
         }
 
+        // Jump input - keyboard for editor, touch handled separately
         if (Input.GetButtonDown("Jump"))
         {
             TryJump();
+        }
+
+        // Handle jump from touch input
+        if (jumpTouchDetected)
+        {
+            TryJump();
+            jumpTouchDetected = false; // Reset after using
+        }
+    }
+
+    private void HandleTouchInput()
+    {
+        isTouchingLeft = false;
+        isTouchingRight = false;
+        jumpTouchDetected = false;
+
+        // Calculate screen zones
+        float screenWidth = Screen.width;
+        float centerZoneStart = screenWidth * (0.5f - jumpZoneWidth * 0.5f);
+        float centerZoneEnd = screenWidth * (0.5f + jumpZoneWidth * 0.5f);
+
+        // Check all active touches
+        foreach (Touch touch in Input.touches)
+        {
+            if (touch.phase == TouchPhase.Began)
+            {
+                // Check which zone the touch is in
+                if (touch.position.x < centerZoneStart)
+                {
+                    // Left zone - movement only
+                    isTouchingLeft = true;
+                }
+                else if (touch.position.x > centerZoneEnd)
+                {
+                    // Right zone - movement only
+                    isTouchingRight = true;
+                }
+                else
+                {
+                    // Center zone - jump only
+                    jumpTouchDetected = true;
+                }
+            }
+            else if (touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Moved)
+            {
+                // Continue movement for held touches (only check movement zones)
+                if (touch.position.x < centerZoneStart)
+                {
+                    isTouchingLeft = true;
+                }
+                else if (touch.position.x > centerZoneEnd)
+                {
+                    isTouchingRight = true;
+                }
+                // Note: No continuous jump in center zone - only on TouchPhase.Began
+            }
         }
     }
 
@@ -186,5 +296,17 @@ public class PlayerMovement : MonoBehaviour
         currentSpeed = originalSpeed;
         isShielded = false;
         // Remove speed boost visual effect
+    }
+
+    // Public methods to adjust settings at runtime
+    public void SetTouchSensitivity(float sensitivity)
+    {
+        touchSensitivity = sensitivity;
+    }
+
+    public void SetBoundaries(float left, float right)
+    {
+        leftBoundary = left;
+        rightBoundary = right;
     }
 }

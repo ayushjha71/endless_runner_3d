@@ -55,11 +55,34 @@ public class ScoreManager : MonoBehaviour
         // Display distance in meters with 1 decimal place
         distanceText.text = totalDistance.ToString("F1") + "m";
         coinText.text = collectedCoins.ToString();
+
+        // Update GameManager with current values
         GameManager.Instance.TotalDistance = totalDistance;
         GameManager.Instance.TotalCoin = collectedCoins;
+
+        // Check for high score before saving
+        CheckAndSaveHighScore();
     }
 
-    // Public getters for other systems that might need these values
-    public float GetTotalDistance() => totalDistance;
-    public float GetCollectedCoins() => collectedCoins;
+    private void CheckAndSaveHighScore()
+    {
+        // Get the current high score from PlayerPrefs (default to 0 if not found)
+        float lastHighScore = PlayerPrefs.GetFloat("HighScore", 0f);
+        int lastHighCoins = PlayerPrefs.GetInt("HighScoreCoins", 0);
+
+        // Check if current distance is a new high score
+        if (totalDistance > lastHighScore)
+        {
+            // New high score achieved! Save both distance and coins
+            PlayerPrefs.SetFloat("HighScore", totalDistance);
+            PlayerPrefs.SetInt("HighScoreCoins", collectedCoins);
+            PlayerPrefs.Save();
+
+            // Optional: You can add some visual feedback here
+            Debug.Log($"New High Score! Distance: {totalDistance:F1}m, Coins: {collectedCoins}");
+
+            // If you want to show a "New High Score!" message to the player
+            // ShowNewHighScoreMessage();
+        }
+    }
 }

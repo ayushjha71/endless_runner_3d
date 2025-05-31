@@ -1,21 +1,32 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using DG.Tweening;
+using System.Collections;
 
 namespace gameAds.Manager
 {
+    public static class UIFadeEffect
+    {
+        public static void FadeIn(CanvasGroup canvasGroup, float endValue, float duration, Action OnCompleted)
+        {
+            canvasGroup.DOFade(endValue, duration).OnComplete(() => { OnCompleted?.Invoke(); });
+        }
+
+        public static void FadeOut(CanvasGroup canvasGroup, float endValue, float duration, Action OnCompleted)
+        {
+            canvasGroup.DOFade(endValue, duration).OnComplete(() => { OnCompleted?.Invoke(); });
+        }
+    }
+
     public static class CustomEvents
     {
         public static Action<PlayerMovement> OnGetPlayerMovementHandler;
         public static Action<int> OnCoinCOllected;
 
-        public static Action OnLeaderBoard;
-
+        public static Action<float> OnPowerUpStatus;
         public static Action OnGameOver;
     }
+
     public class GameManager : MonoBehaviour
     {
         [SerializeField]
@@ -48,7 +59,6 @@ namespace gameAds.Manager
             Instance = this;
             DontDestroyOnLoad(gameObject);
             StartCoroutine(WaitForAdsToLoad());
-            LocalDataBackup.LoadData();
         }
 
         private IEnumerator WaitForAdsToLoad()
@@ -60,7 +70,6 @@ namespace gameAds.Manager
         private void OnDestroy()
         {
             AdsManager.Instance.BannerAdsHandler.HideBannerAds();
-            LocalDataBackup.SaveData();
         }
     }
 }

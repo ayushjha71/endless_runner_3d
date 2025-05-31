@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,7 +18,7 @@ public class ObstacleSpawner : MonoBehaviour
     public float roadLength = 35f; // Length of this ground tile
 
     [Header("Spawn Zones")]
-    public float startZ = 5f; // Start spawning from this Z position
+    public float startZ = 6f; // Start spawning from this Z position
     public float endZ = 35f;   // End spawning at this Z position
 
     [Header("Collectible Chances")]
@@ -27,7 +26,7 @@ public class ObstacleSpawner : MonoBehaviour
     [Range(0f, 1f)] public float powerUpSpawnChance = 0.3f;
 
     [Header("Spacing")]
-    public float minSpaceBetweenObjects = 1.5f;
+    public float minSpaceBetweenObjects = 3f;
 
     private List<Vector3> spawnedPositions = new List<Vector3>();
     private int groundTileIndex = 0; // Will be set by GroundSpawner

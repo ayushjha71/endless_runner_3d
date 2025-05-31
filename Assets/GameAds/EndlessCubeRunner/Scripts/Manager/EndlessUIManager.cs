@@ -1,11 +1,8 @@
 using DG.Tweening;
 using gameAds.Manager;
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class EndlessUIManager : MonoBehaviour
@@ -23,9 +20,19 @@ public class EndlessUIManager : MonoBehaviour
     [SerializeField]
     private Button startBtn;
     [SerializeField]
+    private GameObject startPanel;
+    [SerializeField]
     private Button settingBtn;
+    [SerializeField]
+    private GameObject settingPanel;
     [SerializeField]    
     private Button leaderBoardBtn;
+    [SerializeField]
+    private GameObject leaderBoardPanel;
+    [SerializeField]
+    private TMP_Text leaderBoardCoinText;
+    [SerializeField]
+    private TMP_Text leaderBoardDistanceText;
     [SerializeField]
     private Button exitBtn;
 
@@ -41,16 +48,22 @@ public class EndlessUIManager : MonoBehaviour
 
     private void Start()
     {
-        DisableAllCanvas();
+        leaderBoardCoinText.text = PlayerPrefs.GetInt("HighScoreCoins").ToString();
+        leaderBoardDistanceText.text = PlayerPrefs.GetFloat("HighScore").ToString();
 
+        DisableAllCanvas();
         if (GameManager.Instance.UserFirstVisit)
         {
             mainCanvas.gameObject.SetActive(true);
+            startPanel.SetActive(true);
             GameManager.Instance.UserFirstVisit = false;
         }
         else
         {
+            UIFadeEffect.FadeIn(InGameCanvas, 1, 0.3f, null);
+            mainCanvas.gameObject.SetActive(false);
             groundSpawner.playerTransform.gameObject.SetActive(true);
+
         }
 
         startBtn.onClick.AddListener(OnClickStartBtn);
@@ -83,10 +96,13 @@ public class EndlessUIManager : MonoBehaviour
 
     private void GameOver()
     {
-        Time.timeScale = 0f;
         gameOverCanvas.gameObject.SetActive(true);
-        totalCoinEarn.text = GameManager.Instance.TotalCoin.ToString();
-        distanceTravel.text = GameManager.Instance.TotalDistance.ToString("F1") + "m";
+        UIFadeEffect.FadeIn(gameOverCanvas,1, 0.3f, () =>
+        {
+            Time.timeScale = 0f;
+            totalCoinEarn.text = GameManager.Instance.TotalCoin.ToString();
+            distanceTravel.text = GameManager.Instance.TotalDistance.ToString("F1") + "m";
+        });   
     }
 
     private void RestartButtonClick()
@@ -101,20 +117,26 @@ public class EndlessUIManager : MonoBehaviour
 
     private void OnClickStartBtn()
     {
-        mainCanvas.gameObject.SetActive(false);
-        InGameCanvas.gameObject.Serialize(true);
-        groundSpawner.playerTransform.gameObject.SetActive(true);
+        DisableAllCanvas();
+        startPanel.SetActive(true);
+        UIFadeEffect.FadeOut(mainCanvas, 0, 0.3f, () =>
+        {
+            UIFadeEffect.FadeIn(InGameCanvas, 1, 0.3f, null);
+            groundSpawner.playerTransform.gameObject.SetActive(true);
+            mainCanvas.gameObject.SetActive(false);
+        });
     }
 
     private void OnClickSettingBtn()
     {
-        mainCanvas.gameObject.SetActive(false);
+        DisableAllCanvas();
+        settingPanel.SetActive(true);
     }
 
     private void OnClickLeaderBoardBtn()
     {
-        CustomEvents.OnLeaderBoard?.Invoke();
-        mainCanvas.gameObject.SetActive(false);
+        DisableAllCanvas();
+        leaderBoardPanel.SetActive(true);
     }
 
     private void OnClickExitBtn()
@@ -124,8 +146,8 @@ public class EndlessUIManager : MonoBehaviour
 
     private void DisableAllCanvas()
     {
-        mainCanvas.gameObject.SetActive(false);
-        InGameCanvas.gameObject.Serialize(true);
-        gameOverCanvas.gameObject.SetActive(false);
+        settingPanel.SetActive(false);
+        leaderBoardPanel.SetActive(false);
+        startPanel.SetActive(false);
     }
 }

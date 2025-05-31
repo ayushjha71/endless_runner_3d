@@ -18,6 +18,7 @@ public class CameraMovement : MonoBehaviour
     {
         Vector3 targetPos = Player.position + offset;
         targetPos.x = 0;
+        targetPos.y = 2;
         transform.position = targetPos;
     }
 }
