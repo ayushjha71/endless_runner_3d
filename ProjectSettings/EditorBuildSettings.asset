@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/GameAds/EndlessCubeRunner/MainGame.unity
+    path: Assets/EndlessCubeRunner/MainGame.unity
     guid: ed15b8e13a4414c43b70b12ea69e852d
   m_configObjects: {}
