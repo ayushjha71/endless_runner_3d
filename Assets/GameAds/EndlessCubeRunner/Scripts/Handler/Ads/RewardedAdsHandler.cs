@@ -10,8 +10,6 @@ namespace EndlessCubeRunner.Handler.Ads
         private string androidAdUnitId;
         [SerializeField]
         private string iosAdUnitId;
-        [SerializeField]
-        private RewardHandler rewardHandler;
 
 
         private string mAdUnitID;

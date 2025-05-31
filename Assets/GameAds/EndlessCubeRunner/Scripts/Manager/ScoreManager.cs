@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using EndlessCubeRunner.Handler;
+using EndlessCubeRunner.Constant;
 
 namespace EndlessCubeRunner.Manager
 {
@@ -18,14 +19,14 @@ namespace EndlessCubeRunner.Manager
 
         private void OnEnable()
         {
-            CustomEvents.OnGetPlayerMovementHandler += GetPlayerMovement;
-            CustomEvents.OnCoinCOllected += AddCoin;
+            EndlessRunnerConstant.OnGetPlayerMovementHandler += GetPlayerMovement;
+            EndlessRunnerConstant.OnCoinCOllected += AddCoin;
         }
 
         private void OnDisable()
         {
-            CustomEvents.OnGetPlayerMovementHandler -= GetPlayerMovement;
-            CustomEvents.OnCoinCOllected -= AddCoin;
+            EndlessRunnerConstant.OnGetPlayerMovementHandler -= GetPlayerMovement;
+            EndlessRunnerConstant.OnCoinCOllected -= AddCoin;
         }
 
         private void GetPlayerMovement(PlayerMovement player)

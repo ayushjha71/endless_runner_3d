@@ -156,9 +156,9 @@ RectTransform:
   - {fileID: 189783123}
   m_Father: {fileID: 743084050}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400, y: -637.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 600, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &49173328
@@ -1464,9 +1464,9 @@ RectTransform:
   - {fileID: 1080170991}
   m_Father: {fileID: 743084050}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400, y: -832.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 600, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &471152779
@@ -5048,9 +5048,9 @@ RectTransform:
   - {fileID: 313512416}
   m_Father: {fileID: 743084050}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400, y: -247.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 600, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1647019241
@@ -5169,9 +5169,9 @@ RectTransform:
   - {fileID: 1377011605}
   m_Father: {fileID: 743084050}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400, y: -442.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 600, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1735867441
@@ -5770,7 +5770,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!225 &2027830996
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -6290,11 +6290,11 @@ SceneRoots:
   - {fileID: 705507995}
   - {fileID: 100474051}
   - {fileID: 286799694}
+  - {fileID: 925490677}
   - {fileID: 197944319}
   - {fileID: 2027831000}
   - {fileID: 618731655}
   - {fileID: 4177074804368008725}
+  - {fileID: 418173353}
   - {fileID: 511199851}
   - {fileID: 1019000255}
-  - {fileID: 925490677}
-  - {fileID: 418173353}

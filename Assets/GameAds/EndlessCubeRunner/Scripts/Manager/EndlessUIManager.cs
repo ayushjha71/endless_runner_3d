@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using EndlessCubeRunner.Handler;
+using EndlessCubeRunner.Constant;
 
 namespace EndlessCubeRunner.Manager
 {
@@ -64,7 +65,7 @@ namespace EndlessCubeRunner.Manager
             }
             else
             {
-                UIFadeEffect.FadeIn(InGameCanvas, 1, 0.3f, null);
+                EndlessRunnerConstant.FadeIn(InGameCanvas, 1, 0.3f, null);
                 mainCanvas.gameObject.SetActive(false);
                 groundSpawner.playerTransform.gameObject.SetActive(true);
                 bgAudio.SetActive(true);
@@ -82,12 +83,12 @@ namespace EndlessCubeRunner.Manager
 
         private void OnEnable()
         {
-            CustomEvents.OnGameOver += GameOver;
+            EndlessRunnerConstant.OnGameOver += GameOver;
         }
 
         private void OnDisable()
         {
-            CustomEvents.OnGameOver -= GameOver;
+            EndlessRunnerConstant.OnGameOver -= GameOver;
         }
 
         private void Update()
@@ -103,7 +104,7 @@ namespace EndlessCubeRunner.Manager
         {
             GameManager.Instance.PlayAudio(GameManager.Instance.GameOver, audioSource);
             gameOverCanvas.gameObject.SetActive(true);
-            UIFadeEffect.FadeIn(gameOverCanvas, 1, 0.3f, () =>
+            EndlessRunnerConstant.FadeIn(gameOverCanvas, 1, 0.3f, () =>
             {
                 bgAudio.SetActive(false);
                 Time.timeScale = 0f;
@@ -129,9 +130,9 @@ namespace EndlessCubeRunner.Manager
             GameManager.Instance.PlayAudio(GameManager.Instance.ClickAudio, audioSource);
             DisableAllCanvas();
             startPanel.SetActive(true);
-            UIFadeEffect.FadeOut(mainCanvas, 0, 0.3f, () =>
+            EndlessRunnerConstant.FadeOut(mainCanvas, 0, 0.3f, () =>
             {
-                UIFadeEffect.FadeIn(InGameCanvas, 1, 0.3f, null);
+                EndlessRunnerConstant.FadeIn(InGameCanvas, 1, 0.3f, null);
                 groundSpawner.playerTransform.gameObject.SetActive(true);
                 mainCanvas.gameObject.SetActive(false);
                 bgAudio.SetActive(true);

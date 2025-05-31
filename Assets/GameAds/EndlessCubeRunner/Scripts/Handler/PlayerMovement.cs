@@ -1,3 +1,4 @@
+using EndlessCubeRunner.Constant;
 using EndlessCubeRunner.Manager;
 using System.Collections;
 using UnityEngine.UI;
@@ -62,7 +63,7 @@ namespace EndlessCubeRunner.Handler
 
         private void Start()
         {
-            CustomEvents.OnGetPlayerMovementHandler?.Invoke(this);
+            EndlessRunnerConstant.OnGetPlayerMovementHandler?.Invoke(this);
             currentLives = maxLives;
             mCurrentSpeed = baseSpeed;
             UpdateLifeImages();
@@ -189,7 +190,7 @@ namespace EndlessCubeRunner.Handler
             {
                 GameManager.Instance.PlayAudio(GameManager.Instance.CollectAudio, audioSource);
                 Destroy(collision.gameObject);
-                CustomEvents.OnCoinCOllected?.Invoke(1);
+                EndlessRunnerConstant.OnCoinCOllected?.Invoke(1);
             }
         }
 
@@ -200,7 +201,7 @@ namespace EndlessCubeRunner.Handler
 
             if (currentLives <= 0)
             {
-                CustomEvents.OnGameOver?.Invoke();
+                EndlessRunnerConstant.OnGameOver?.Invoke();
             }
         }
 

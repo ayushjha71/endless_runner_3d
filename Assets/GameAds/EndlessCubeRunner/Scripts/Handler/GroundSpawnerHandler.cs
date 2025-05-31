@@ -8,8 +8,7 @@ namespace EndlessCubeRunner.Handler
         public GameObject groundTile;
 
         [Header("Infinite Generation Settings")]
-        [SerializeField]
-        private Transform playerTransform; // Assign your player here
+        public Transform playerTransform; // Assign your player here
         [SerializeField]
         private int tilesAhead = 5; // How many tiles to keep ahead of player
         [SerializeField]

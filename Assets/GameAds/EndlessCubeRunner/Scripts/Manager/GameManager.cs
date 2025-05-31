@@ -1,33 +1,8 @@
-using System;
-using DG.Tweening;
 using UnityEngine;
 using System.Collections;
-using EndlessCubeRunner.Handler;
 
 namespace EndlessCubeRunner.Manager
 {
-    public static class UIFadeEffect
-    {
-        public static void FadeIn(CanvasGroup canvasGroup, float endValue, float duration, Action OnCompleted)
-        {
-            canvasGroup.DOFade(endValue, duration).OnComplete(() => { OnCompleted?.Invoke(); });
-        }
-
-        public static void FadeOut(CanvasGroup canvasGroup, float endValue, float duration, Action OnCompleted)
-        {
-            canvasGroup.DOFade(endValue, duration).OnComplete(() => { OnCompleted?.Invoke(); });
-        }
-    }
-
-    public static class CustomEvents
-    {
-        public static Action<PlayerMovement> OnGetPlayerMovementHandler;
-        public static Action<int> OnCoinCOllected;
-
-        public static Action<float> OnPowerUpStatus;
-        public static Action OnGameOver;
-    }
-
     public class GameManager : MonoBehaviour
     {
         [Header("Audio Clip")]

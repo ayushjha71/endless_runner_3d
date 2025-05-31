@@ -12,7 +12,7 @@ namespace EndlessCubeRunner.Handler.Ads
         private void Awake()
         {
 #if UNITY_ANDROID
-            mGameKey = GameAdsConstant.ANDROID_GAME_KEY;
+            mGameKey = EndlessRunnerConstant.ANDROID_GAME_KEY;
 #elif UNITY_IOS
             mGameKey = GameAdsConstant.IOS_GAME_KEY;
 #elif UNITY_EDITOR
@@ -20,7 +20,7 @@ namespace EndlessCubeRunner.Handler.Ads
 #endif
             if(!Advertisement.isInitialized && Advertisement.isSupported)
             {
-                Advertisement.Initialize(mGameKey, GameAdsConstant.IsTesting, this);
+                Advertisement.Initialize(mGameKey, EndlessRunnerConstant.IsTesting, this);
             }
         }
 
