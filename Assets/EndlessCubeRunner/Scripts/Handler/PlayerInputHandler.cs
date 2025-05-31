@@ -4,33 +4,36 @@ using UnityEngine;
 
 namespace EndlessCubeRunner.Handler
 {
-public class PlayerInputHandler : MonoBehaviour
-{
-    // Mobile touch controls
-    [Header("Mobile Touch Controls")]
-    public bool isTouchingLeft = false;
-    public bool isTouchingRight = false;
-    [Header("Jump Controls")]
-    public float jumpZoneWidth = 0.3f; // Center zone width for jump (0.3 = 30% of screen width)
-    public bool jumpTouchDetected = false;
-
-    public static PlayerInputHandler Instance;
-
-    private void Awake()
+    public class PlayerInputHandler : MonoBehaviour
     {
-        if (Instance != null && Instance != this)
+        // Mobile touch controls
+        public float KeyBoardInput;
+        [Header("Mobile Touch Controls")]
+        public bool isTouchingLeft = false;
+        public bool isTouchingRight = false;
+        [Header("Jump Controls")]
+        public float jumpZoneWidth = 0.3f; // Center zone width for jump (0.3 = 30% of screen width)
+        public bool jumpTouchDetected = false;
+
+        public static PlayerInputHandler Instance;
+
+        private void Awake()
         {
-            Destroy(gameObject);
-            return;
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
 
-    private void Update()
-    {
-        HandleTouchInput();
-    }
+        private void Update()
+        {
+            // Get keyboard input (for testing in editor)
+            KeyBoardInput = Input.GetAxis("Horizontal");
+            HandleTouchInput();
+        }
 
         private void HandleTouchInput()
         {
@@ -79,6 +82,6 @@ public class PlayerInputHandler : MonoBehaviour
                     // Note: No continuous jump in center zone - only on TouchPhase.Began
                 }
             }
-        }  
+        }
     }
 }

@@ -89,13 +89,17 @@ namespace EndlessCubeRunner.Handler
             newPosition.x = Mathf.Clamp(newPosition.x, leftBoundary, rightBoundary);
 
             rb.MovePosition(newPosition);
+
+            // Score-based speed increase
+            if (GameManager.Instance.TotalDistance >= mNextSpeedIncreaseScore)
+            {
+                IncreaseSpeed();
+                mNextSpeedIncreaseScore += mScoreIntervalForSpeedIncrease;
+            }
         }
 
         private void Update()
         {
-            // Get keyboard input (for testing in editor)
-            float keyboardInput = Input.GetAxis("Horizontal");
-
             // Combine touch and keyboard input
             if (PlayerInputHandler.Instance.isTouchingLeft)
             {
@@ -105,9 +109,9 @@ namespace EndlessCubeRunner.Handler
             {
                 mTargetHorizontalInput = 1f * touchSensitivity;
             }
-            else if (Mathf.Abs(keyboardInput) > 0.1f)
+            else if (Mathf.Abs(PlayerInputHandler.Instance.KeyBoardInput) > 0.1f)
             {
-                mTargetHorizontalInput = keyboardInput;
+                mTargetHorizontalInput = PlayerInputHandler.Instance.KeyBoardInput;
             }
             else
             {
@@ -116,13 +120,6 @@ namespace EndlessCubeRunner.Handler
 
             // Smooth the horizontal input for better feel
             mHorizontalInput = Mathf.Lerp(mHorizontalInput, mTargetHorizontalInput, mInputSmoothSpeed * Time.deltaTime);
-
-            // Score-based speed increase
-            if (GameManager.Instance.TotalDistance >= mNextSpeedIncreaseScore)
-            {
-                IncreaseSpeed();
-                mNextSpeedIncreaseScore += mScoreIntervalForSpeedIncrease;
-            }
 
             // Jump input - keyboard for editor, touch handled separately
             if (Input.GetButtonDown("Jump"))
