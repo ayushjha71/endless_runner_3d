@@ -277,8 +277,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 32.152588, y: 0}
-  m_SizeDelta: {x: -64.3053, y: 0}
+  m_AnchoredPosition: {x: 14.4843, y: 0}
+  m_SizeDelta: {x: -28.9686, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &69596994
 MonoBehaviour:
@@ -300,7 +300,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Lives
+  m_text: Revive
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6685759010d20ce4a943fe42e71574cb, type: 2}
   m_sharedMaterial: {fileID: -6115361440484762755, guid: 6685759010d20ce4a943fe42e71574cb, type: 2}
@@ -996,6 +996,7 @@ MonoBehaviour:
   rb: {fileID: 286799690}
   leftBoundary: -1.3
   rightBoundary: 1.7
+  powerupSlider: {fileID: 2103179861}
   maxLives: 3
   lifeImages:
   - {fileID: 1781452975}
@@ -2070,7 +2071,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0.5
+  m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96

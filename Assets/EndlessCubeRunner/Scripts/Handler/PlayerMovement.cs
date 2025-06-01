@@ -31,12 +31,14 @@ namespace EndlessCubeRunner.Handler
         [SerializeField]
         private float rightBoundary = 1.7f;  // Adjust based on your road width
 
+        [Header("Powerup UI")]
+        [SerializeField]
+        private Slider powerupSlider; 
 
         // Lives system
         public int maxLives = 3;
         private int currentLives;
         public Image[] lifeImages;
-
 
         // Smooth movement Input
         private float mTargetHorizontalInput = 0f;
@@ -58,8 +60,15 @@ namespace EndlessCubeRunner.Handler
         private bool mIsGrounded = false;
         private bool mCanDoubleJump = false;
 
+        // Powerup system
         private bool isShielded = false;
+        private bool isSpeedBoosted = false;
+        private Coroutine currentPowerupCoroutine;
 
+        // Powerup timer variables
+        private float currentPowerupDuration;
+        private float maxPowerupDuration;
+        private string currentPowerupType = "";
 
         private void Start()
         {
@@ -69,37 +78,11 @@ namespace EndlessCubeRunner.Handler
             UpdateLifeImages();
         }
 
-
-        private void FixedUpdate()
-        {
-            // Progressive speed increase over time
-            if (mCurrentSpeed < mMaxSpeed)
-            {
-                mCurrentSpeed += speedIncreaseRate * Time.deltaTime;
-                mCurrentSpeed = Mathf.Min(mCurrentSpeed, mMaxSpeed);
-            }
-
-            Vector3 forwardMove = transform.forward * mCurrentSpeed * Time.deltaTime;
-            Vector3 horizontalMove = transform.right * mHorizontalInput * mCurrentSpeed * Time.deltaTime * mHorizontalMultiplier;
-
-            // Calculate new position
-            Vector3 newPosition = rb.position + forwardMove + horizontalMove;
-
-            // Clamp horizontal position to keep player within boundaries
-            newPosition.x = Mathf.Clamp(newPosition.x, leftBoundary, rightBoundary);
-
-            rb.MovePosition(newPosition);
-
-            // Score-based speed increase
-            if (GameManager.Instance.TotalDistance >= mNextSpeedIncreaseScore)
-            {
-                IncreaseSpeed();
-                mNextSpeedIncreaseScore += mScoreIntervalForSpeedIncrease;
-            }
-        }
-
         private void Update()
         {
+            // Update powerup slider
+            UpdatePowerupSlider();
+
             // Combine touch and keyboard input
             if (PlayerInputHandler.Instance.isTouchingLeft)
             {
@@ -133,6 +116,70 @@ namespace EndlessCubeRunner.Handler
                 TryJump();
                 PlayerInputHandler.Instance.jumpTouchDetected = false; // Reset after using
             }
+        }
+
+        private void FixedUpdate()
+        {
+            // Progressive speed increase over time
+            if (mCurrentSpeed < mMaxSpeed)
+            {
+                mCurrentSpeed += speedIncreaseRate * Time.deltaTime;
+                mCurrentSpeed = Mathf.Min(mCurrentSpeed, mMaxSpeed);
+            }
+
+            Vector3 forwardMove = transform.forward * mCurrentSpeed * Time.deltaTime;
+            Vector3 horizontalMove = transform.right * mHorizontalInput * mCurrentSpeed * Time.deltaTime * mHorizontalMultiplier;
+
+            // Calculate new position
+            Vector3 newPosition = rb.position + forwardMove + horizontalMove;
+
+            // Clamp horizontal position to keep player within boundaries
+            newPosition.x = Mathf.Clamp(newPosition.x, leftBoundary, rightBoundary);
+
+            rb.MovePosition(newPosition);
+
+            // Score-based speed increase
+            if (GameManager.Instance.TotalDistance >= mNextSpeedIncreaseScore)
+            {
+                IncreaseSpeed();
+                mNextSpeedIncreaseScore += mScoreIntervalForSpeedIncrease;
+            }
+        }
+
+        private void UpdatePowerupSlider()
+        {
+            if (powerupSlider != null && (isShielded || isSpeedBoosted))
+            {
+                // Update the slider value based on remaining time
+                float normalizedValue = currentPowerupDuration / maxPowerupDuration;
+                powerupSlider.value = normalizedValue;
+
+                // Update the countdown (decrease timer)
+                currentPowerupDuration -= Time.deltaTime;
+
+                // Update text to show remaining time
+                //if (powerupText != null)
+                //{
+                //    powerupText.text = $"{currentPowerupType}: {currentPowerupDuration:F1}s";
+                //}
+            }
+        }
+
+        private void ShowPowerupUI(string powerupType, float duration)//, Sprite icon)
+        {
+            currentPowerupType = powerupType;
+            currentPowerupDuration = duration;
+            maxPowerupDuration = duration;
+            // Set slider to full
+            if (powerupSlider != null)
+                powerupSlider.value = 1f;
+        }
+
+        private void HidePowerupUI()
+        {
+            currentPowerupType = "";
+            currentPowerupDuration = 0f;
+            maxPowerupDuration = 0f;
         }
 
         private void IncreaseSpeed()
@@ -173,15 +220,14 @@ namespace EndlessCubeRunner.Handler
                 if (isShielded)
                 {
                     Destroy(collision.gameObject);
-                    isShielded = false;
-                    // Remove shield visual effect immediately
+                    // Shield absorbs hit but continues
                 }
                 else
                 {
                     GameManager.Instance.PlayAudio(GameManager.Instance.DieAudio, audioSource);
                     LoseLife();
+                    Destroy(collision.gameObject);
                 }
-                Destroy(collision.gameObject);
             }
             else if (collision.gameObject.tag == "coins")
             {
@@ -212,38 +258,65 @@ namespace EndlessCubeRunner.Handler
 
         public void ActivateShield(float duration)
         {
-            if (!isShielded)
+            // Stop any existing powerup
+            if (currentPowerupCoroutine != null)
             {
-                isShielded = true;
-                // Add shield visual effect
-                StartCoroutine(DeactivateShield(duration));
+                StopCoroutine(currentPowerupCoroutine);
             }
+
+            isShielded = true;
+            isSpeedBoosted = false;
+
+            // Show shield UI
+            ShowPowerupUI("Shield", duration);
+
+            // Start shield coroutine
+            currentPowerupCoroutine = StartCoroutine(DeactivateShield(duration));
         }
 
         IEnumerator DeactivateShield(float duration)
         {
             yield return new WaitForSeconds(duration);
             isShielded = false;
-            // Remove shield visual effect
+            HidePowerupUI();
+            currentPowerupCoroutine = null;
         }
 
         public void ActivateSpeedBoost(float boostAmount, float duration)
         {
-            StartCoroutine(BoostSpeed(boostAmount, duration));
+            // Stop any existing powerup
+            if (currentPowerupCoroutine != null)
+            {
+                StopCoroutine(currentPowerupCoroutine);
+                // Reset speed if we were speed boosted
+                if (isSpeedBoosted)
+                {
+                    mCurrentSpeed = baseSpeed;
+                }
+            }
+
+            isSpeedBoosted = true;
+            isShielded = true;
+
+            // Show speed boost UI
+            ShowPowerupUI("Speed Boost", duration);
+
+            // Start speed boost coroutine
+            currentPowerupCoroutine = StartCoroutine(BoostSpeed(boostAmount, duration));
         }
 
         IEnumerator BoostSpeed(float boostAmount, float duration)
         {
-            isShielded = true;
             float originalSpeed = mCurrentSpeed;
             mCurrentSpeed += boostAmount;
-            // Add speed boost visual effect
 
             yield return new WaitForSeconds(duration);
 
             mCurrentSpeed = originalSpeed;
+            isSpeedBoosted = false;
             isShielded = false;
-            // Remove speed boost visual effect
+            HidePowerupUI();
+            currentPowerupCoroutine = null;
         }
     }
 }
