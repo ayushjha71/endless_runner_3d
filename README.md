@@ -1,32 +1,80 @@
-# Endless Runner 
-Engine: Unity 2022.3.41f1   |  Platforms: Android & iOS   |  Language: C#
+# Endless Runner – Mobile Game
 
+An engaging mobile-first endless runner game developed in Unity, focused on responsive gameplay, intuitive controls, and monetization. Designed and optimized for both Android and iOS platforms.
 
-A high-performance, mobile-first endless runner game designed with a structured development approach focused on engaging core gameplay, intuitive user experience, and monetization integration. The game features smooth runner mechanics, dynamic obstacle spawning, and responsive controls, ensuring a seamless experience across a wide range of mobile devices.
+## 📱 Gameplay Overview
 
-Key Features
+Players control a runner who must avoid obstacles, collect points, and survive as long as possible. The game supports simple touch-based input for smooth and dynamic control, offering an intuitive user experience for mobile users.
 
-Core Gameplay: Fast-paced running mechanics, obstacle avoidance, and score tracking.
+---
 
-UI/UX Design: Intuitive interface with TextMesh Pro-enhanced visuals and HUD.
+## 🎮 Player Controls
 
-Polished Animations: Fluid transitions and effects powered by DOTween.
+| Action           | Control Method                      |
+|------------------|--------------------------------------|
+| Move Left        | Touch left side of the screen        |
+| Move Right       | Touch right side of the screen       |
+| Jump             | Touch center of the screen           |
+| Double Jump      | Double-tap the center of the screen  |
 
-Monetization: Seamless integration of Unity Ads for interstitial and rewarded video ads.
+---
 
-Cross-Platform Optimization: Tailored builds and performance tuning for Android and iOS
+## 🛠️ Development Phases
 
-Tools & Technologies
-Unity – Core game development and asset management.
+1. **Core Mechanics Implementation**  
+   Basic runner movement, obstacle generation, and collision detection.
 
-C# – Gameplay logic, UI systems, and ad integration.
+2. **UI/UX Development**  
+   Menu systems, HUD elements, and user interface using TextMesh Pro.
 
-TextMesh Pro – High-quality UI text rendering.
+3. **Animation & Visual Polish**  
+   Smooth transitions and animations using DOTween.
 
-DOTween – Smooth UI and gameplay animations.
+4. **Monetization Integration**  
+   Unity Ads implemented for interstitial and rewarded video ads.
 
-Unity Ads – Monetization through in-game ads.
+5. **Platform Optimization**  
+   Platform-specific builds and performance tuning for Android and iOS.
 
-Visual Studio – Scripting and debugging environment.
+6. **Testing & Debugging**  
+   Cross-platform testing with performance monitoring.
 
-This project exemplifies mobile game development best practices, combining visual polish with monetization strategies to deliver an engaging and scalable product.
+---
+
+## 🧰 Tech Stack
+
+### Core Technologies
+
+- **Game Engine:** Unity (2022.3.41f1)
+- **Programming Language:** C#  
+- **Platforms:** Android, iOS
+
+### Plugins & Libraries
+
+#### ✅ TextMesh Pro  
+- Advanced UI text rendering  
+- Used for menus, HUD, and score display  
+- Offers high performance and customizable formatting
+
+#### ✅ DOTween  
+- Used for UI and object animations  
+- Smooth menu transitions, jump effects, and score animations  
+- Lightweight and high-performance tweening solution
+
+#### ✅ Unity Ads  
+- Integrated for monetization through video ads  
+- Interstitial and rewarded ads used on restart and revive screens  
+- Generates revenue from impressions and engagement
+
+---
+
+## 🔧 Development Tools
+
+- **IDE:** Visual Studio / Visual Studio Code  
+- **Build System:** Unity’s build pipeline  
+- **Asset Management:** Unity's built-in asset organization and optimization tools
+
+---
+
+## 📦 Folder Structure (Sample)
+
