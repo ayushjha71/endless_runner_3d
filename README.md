@@ -75,6 +75,3 @@ Players control a runner who must avoid obstacles, collect points, and survive a
 - **Asset Management:** Unity's built-in asset organization and optimization tools
 
 ---
-
-## 📦 Folder Structure (Sample)
-
